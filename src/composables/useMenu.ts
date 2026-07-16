@@ -4,27 +4,27 @@ import { menuService } from '@/services/menuService'
 import type { FilterCategory } from '@/components/menu/CategoryFilter.vue'
 
 export function useMenu() {
-  // Stati reattivi interni
+  // Internal reactive states
   const items = ref<MenuItem[]>([])
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
   const selectedCategory = ref<FilterCategory>('all')
 
-  // Azione per recuperare i dati
+  // Action for fetching the data
   const fetchMenu = async () => {
     loading.value = true
     error.value = null
     try {
       items.value = await menuService.getMenuItems()
     } catch (err) {
-      error.value = 'Impossibile caricare il menu. Riprova più tardi.'
+      error.value = 'Impossible to load the menu. Please try again later.'
       console.error(err)
     } finally {
       loading.value = false
     }
   }
 
-  // Stato derivato (filtrato)
+  // Derivated states (filtered items based on selected category)
   const filteredItems = computed(() => {
     if (selectedCategory.value === 'all') {
       return items.value
@@ -32,7 +32,7 @@ export function useMenu() {
     return items.value.filter(item => item.category === selectedCategory.value)
   })
 
-  // Esponiamo all'esterno solo ciò che serve ai componenti
+  // Expose only what is needed by the components
   return {
     items,
     loading,

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useMenu } from '@/composables/useMenu'
+import { useCart } from '@/composables/useCart'
 import MenuItemCard from './MenuItemCard.vue'
 import CategoryFilter from './CategoryFilter.vue'
 import type { MenuItem } from '@/types/menu'
 
-// Estraiamo tutto il necessario dal nostro composable
+// Extract all the necessary reactive properties and methods from the composables
 const { 
   loading, 
   error, 
@@ -14,20 +15,25 @@ const {
   fetchMenu 
 } = useMenu()
 
-// Carichiamo i dati all'avvio del componente
+// Initialize the composable for the cart to handle adding items
+const { addToCart } = useCart()
+
+// Load the menu items when the component is mounted
 onMounted(() => {
   fetchMenu()
 })
 
+// This function will be called when a user clicks the "Add to Cart" button on a menu item card
 const handleAddToCart = (item: MenuItem) => {
-  alert(`Aggiunto al carrello: ${item.name}!`)
+  addToCart(item)
 }
+
 </script>
 
 <template>
   <v-container class="menu-container py-6">
     
-    <!-- Intestazione -->
+    <!-- Header -->
     <div class="mb-6">
       <h2 class="text-h4 font-weight-bold text-grey-darken-3 mb-2 d-flex align-center">
         Il Nostro Menu <span class="ml-2 text-h5">🥢</span>
@@ -35,10 +41,10 @@ const handleAddToCart = (item: MenuItem) => {
       <CategoryFilter v-model="selectedCategory" />
     </div>
     
-    <!-- Area Principale -->
+    <!-- Main Area -->
     <div class="menu-grid-wrapper">
       
-      <!-- Gestione Errore -->
+      <!-- Error Management -->
       <v-alert
         v-if="error"
         type="error"
@@ -50,8 +56,8 @@ const handleAddToCart = (item: MenuItem) => {
       </v-alert>
 
       <v-row>
-        <!-- Stato Caricamento: Skeleton Loaders -->
-        <!-- Mostriamo 3 scheletri di card identici alla struttura reale mentre carica -->
+        <!-- Loading State: Skeleton Loaders -->
+        <!-- Show 3 skeleton cards identical to the real structure while loading -->
         <template v-if="loading">
           <v-col
             v-for="n in 3" 
@@ -61,7 +67,7 @@ const handleAddToCart = (item: MenuItem) => {
             md="4"
             class="pb-4"
           >
-            <!-- Lo skeleton riproduce la forma esatta dell'immagine + titolo + dettagli + bottone -->
+            <!-- The skeleton reproduces the exact shape of the image + title + details + button -->
             <v-skeleton-loader
               type="image, article, actions"
               elevation="1"
@@ -71,13 +77,13 @@ const handleAddToCart = (item: MenuItem) => {
           </v-col>
         </template>
 
-        <!-- Stato Vuoto (A caricamento completato) -->
+        <!-- Void State (Once loading is complete) -->
         <v-col v-else-if="filteredItems.length === 0" cols="12" class="text-center py-12">
           <v-icon size="64" color="grey-lighten-1">mdi-emoticon-sad-outline</v-icon>
           <p class="text-h6 text-grey-darken-1 mt-4">Nessun piatto disponibile al momento.</p>
         </v-col>
 
-        <!-- Lista dei piatti reali -->
+        <!-- Real Plates list -->
         <v-col 
           v-else
           v-for="sushi in filteredItems" 

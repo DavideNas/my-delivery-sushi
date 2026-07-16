@@ -128,14 +128,3 @@ Vuetify entra a livello di **UI primitives**, non sostituisce l'architettura sop
 | 26-30 | Buffer: rifinitura, eventuale hybrid rendering con Nuxt su pagine menu pubbliche (stretch goal, opzionale), preparazione demo/showcase del progetto per il colloquio | consolidamento, storytelling finale |
 
 ---
-
-## 3. Cosa portare al colloquio da questo progetto
-
-- 2 ADR scritti (giorno 25) — è l'evidenza concreta di "ownership e coerenza architetturale a lungo termine".
-- Il confronto Pinia vs `provide`/`inject` con codice reale alla mano (non solo a parole) per la domanda su RBAC/stato.
-- L'esempio di `ErrorBoundary` + widget instabile come risposta pronta alla domanda su stabilità della UI.
-- La migrazione incrementale a Vuetify come esempio di "adozione di nuova tecnologia per ridurre complessità e tempo di delivery" — frase quasi identica a un bullet della JD.
-
----
-
-*Il piano parte dallo Step 2 di oggi (Vuetify + migrazione MenuItemCard). Procediamo?*

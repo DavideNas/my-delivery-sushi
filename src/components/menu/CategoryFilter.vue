@@ -14,13 +14,14 @@ const categories = [
   { value: 'nigiri', label: 'Nigiri', icon: 'mdi-rice' },
   { value: 'uramaki', label: 'Uramaki', icon: 'mdi-circle-double' },
   { value: 'temaki', label: 'Temaki', icon: 'mdi-food-croissant' },
+  { value: 'poke', label: 'Poke', icon: 'mdi-fish' },
   { value: 'bevande', label: 'Bevande', icon: 'mdi-cup-water' }
 ] as const
 </script>
 
 <template>
   <v-sheet class="py-2 bg-transparent w-100">
-    <!-- Usiamo selected-class="selected-chip" per gestire i colori personalizzati -->
+    <!-- We use selected-class="selected-chip" to manage custom colors -->
     <v-chip-group
       :model-value="props.modelValue"
       @update:model-value="emit('update:modelValue', $event as FilterCategory)"
@@ -42,20 +43,20 @@ const categories = [
 </template>
 
 <style scoped>
-/* Stile base del chip (grigio chiaro quando non selezionato) */
+/* Basic style fot the chip (light grey when not selected) */
 .filter-chip {
   background-color: #e0e0e0 !important;
   color: #333333 !important;
   transition: all 0.2s ease;
 }
 
-/* Stile forzato quando il chip viene selezionato (sfondo primario, testo bianco pulito) */
+/* Forced style when the chip is selected (primary background, white clean text) */
 .selected-chip {
-  background-color: #FF5722 !important; /* Colore primario arancione */
-  color: #FFFFFF !important;            /* Forza il testo a essere bianco */
+  background-color: #FF5722 !important; /* Primary color orange */
+  color: #FFFFFF !important;            /* Force the text to be white */
 }
 
-/* Assicura che anche l'icona interna diventi bianca quando selezionata */
+/* Ensure that even the internal icon becomes white when selected */
 .selected-chip :deep(.v-icon) {
   color: #FFFFFF !important;
 }
