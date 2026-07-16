@@ -1,11 +1,23 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useCart } from '@/composables/useCart'
 import CartLineItem from './CartLineItem.vue'
+// Import new stepper component for checkout
+import CheckoutStepper from '@/components/checkout/CheckoutStepper.vue'
 
 // Synchronize open/close state of the drawer with App.vue
 const model = defineModel<boolean>({ default: false })
 
 const { cartItems, totalPrice, totalItemsCount, addToCart, removeFromCart, clearCart } = useCart()
+
+// State to control open/close of the checkout stepper modal
+const isCheckoutOpen = ref(false)
+
+// Function which is a bridge between the cart drawer and the checkout stepper modal
+const startCheckout = () => {
+  model.value = false         // Close the cart drawer
+  isCheckoutOpen.value = true // Open the checkout stepper modal
+}
 </script>
 
 <template>
@@ -71,6 +83,7 @@ const { cartItems, totalPrice, totalItemsCount, addToCart, removeFromCart, clear
         </span>
       </div>
 
+      <!-- Button to open the checkout stepper modal -->
       <v-btn
         color="primary"
         block
@@ -78,6 +91,7 @@ const { cartItems, totalPrice, totalItemsCount, addToCart, removeFromCart, clear
         rounded="lg"
         class="font-weight-bold text-none mb-2"
         prepend-icon="mdi-cash-register"
+        @click="startCheckout"
       >
         Proceed to Checkout
       </v-btn>
@@ -95,4 +109,10 @@ const { cartItems, totalPrice, totalItemsCount, addToCart, removeFromCart, clear
       </v-btn>
     </div>
   </v-navigation-drawer>
+
+  <!-- Checkout Stepper Modal -->
+  <v-dialog v-model="isCheckoutOpen" max-width="600" transition="dialog-bottom-transition" persistent>
+    <!-- Listen for @close event emitted by the StepSummary or from parent component when the checkout is completed -->
+    <CheckoutStepper @close="isCheckoutOpen = false" />
+  </v-dialog>
 </template>
