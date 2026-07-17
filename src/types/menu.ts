@@ -5,7 +5,7 @@ export interface MenuItem {
   description: string
   price: number
   image: string
-  category: 'nigiri' | 'uramaki' | 'temaki' | 'bevande'
+  category: 'nigiri' | 'uramaki' | 'temaki' | 'drinks' | 'poke'
   available: boolean
 }
 

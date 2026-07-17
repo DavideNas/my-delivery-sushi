@@ -2,20 +2,20 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
 import App from './App.vue'
 import router from './router'
-
-// 1. Importa il plugin Vuetify appena creato
 import vuetify from './plugins/vuetify'
+import { useAuthStore } from '@/stores/auth'
 
-// 2. Crea l'app Vue
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
-
-// 3. Usa Vuetify
 app.use(vuetify)
 
-app.mount('#app')
+// Init auth store (token is validated on the fly if present in localStorage)
+const authStore = useAuthStore()
+authStore.initAuth().finally(() => {
+    app.mount('#app')
+})

@@ -5,43 +5,70 @@ const mockDb: MenuItem[] = [
   {
     id: '1',
     name: 'Sake Nigiri',
-    description: 'Polpettina di riso con fettina di salmone fresco.',
-    price: 4.50,
-    image: 'https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=500',
+    description: 'Rice ball with a slice of seared salmon.',
+    price: 4.00,
+    image: 'https://images.unsplash.com/photo-1562158074-d49fbeffcc91?w=500',
+    category: 'nigiri',
+    available: true
+  },
+  {
+    id: '8',
+    name: 'Nigiri Sushi Maguro',
+    description: 'Rice ball with a slice of seared tuna.',
+    price: 5.00,
+    image: 'https://plus.unsplash.com/premium_photo-1723809849978-31e019ac29fc?w=500',
     category: 'nigiri',
     available: true
   },
   {
     id: '2',
     name: 'Ebiten Uramaki',
-    description: 'Roll interno con gambero in tempura, maionese e salse kabayaki.',
+    description: 'Internal roll with tempura shrimp, mayonnaise and kabayaki sauces.',
     price: 12.00,
     image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500',
     category: 'uramaki',
     available: true
   },
   {
+    id: '10',
+    name: 'Tuna Uramaki',
+    description: 'Internal roll with tuna, mayo and kabayaki sauces.',
+    price: 12.00,
+    image: 'https://images.unsplash.com/photo-1761315414321-e17329d0f74b?w=500',
+    category: 'uramaki',
+    available: true
+  }, 
+  {
     id: '3',
-    name: 'Maguro Temaki',
-    description: 'Cono di alga nori ripieno di riso, tonno e avocado.',
+    name: 'Octopus temaki',
+    description: 'Nori seaweed cone filled with rice, octopus and sesame seeds.',
     price: 6.00,
-    image: 'https://images.unsplash.com/photo-1617196034183-421b4917c92d?w=500',
+    image: 'https://plus.unsplash.com/premium_photo-1738099524863-0b90dbb6c13c?w=500',
     category: 'temaki',
     available: false
   },
+    {
+    id: '9',
+    name: 'Salmon temaki',
+    description: 'Nori seaweed cone filled with rice, salmon and avocado.',
+    price: 5.00,
+    image: 'https://plus.unsplash.com/premium_photo-1738099524886-5697dd327725?w=500',
+    category: 'temaki',
+    available: true
+  },
   {
     id: '4',
-    name: 'Tè Verde Matcha',
-    description: 'Tipico tè verde giapponese freddo, rinfrescante e antiossidante.',
+    name: 'Matcha Green Tea',
+    description: 'Typical Japanese cold green tea, refreshing and antioxidant.',
     price: 3.50,
     image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=500',
-    category: 'bevande',
+    category: 'drinks',
     available: true
   },
   {
     id: '5',
-    name: 'Poke Bowl Salmone',
-    description: 'Poke bowl con riso, salmone fresco, avocado, edamame e verdure di stagione.',
+    name: 'Poke Bowl Salmon',
+    description: 'Poke bowl with rice, fresh salmon, avocado, edamame and seasonal vegetables.',
     price: 15.00,
     image: 'https://plus.unsplash.com/premium_photo-1701113208681-7ff82c25e039?w=500',    
     category: 'poke',
@@ -49,8 +76,8 @@ const mockDb: MenuItem[] = [
   },
   {
     id: '6',
-    name: 'Poke Bowl Vegana',
-    description: 'Poke bowl con riso, tofu, avocado, edamame e verdure di stagione.',
+    name: 'Poke Bowl Vegan',
+    description: 'Poke bowl with rice, tofu, avocado, edamame and seasonal vegetables.',
     price: 13.00,
     image: 'https://plus.unsplash.com/premium_photo-1698867577020-38ae235fd612?w-500',    
     category: 'poke',
@@ -59,10 +86,10 @@ const mockDb: MenuItem[] = [
   {
     id: '7',
     name: 'Sake Asahi Shuzo Dassai',
-    description: 'Bottiglia da 300 ml di Sake.',
+    description: '300ml bottle of Premium quality Sake.',
     price: 26.90,
     image: 'https://images.unsplash.com/photo-1691432633040-c31b6086742c?w=500&h=600&fit=crop&crop=focalpoint&fp-y=0.22',
-    category: 'bevande',
+    category: 'drinks',
     available: true
   }  
 ]

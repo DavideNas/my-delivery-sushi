@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export type FilterCategory = 'all' | 'nigiri' | 'uramaki' | 'temaki' | 'bevande'
+export type FilterCategory = 'all' | 'nigiri' | 'uramaki' | 'temaki' | 'drinks' | 'poke'
 
 const props = defineProps<{
   modelValue: FilterCategory
@@ -10,12 +10,12 @@ const emit = defineEmits<{
 }>()
 
 const categories = [
-  { value: 'all', label: 'Tutti', icon: 'mdi-all-inclusive' },
+  { value: 'all', label: 'All', icon: 'mdi-all-inclusive' },
   { value: 'nigiri', label: 'Nigiri', icon: 'mdi-rice' },
   { value: 'uramaki', label: 'Uramaki', icon: 'mdi-circle-double' },
   { value: 'temaki', label: 'Temaki', icon: 'mdi-food-croissant' },
   { value: 'poke', label: 'Poke', icon: 'mdi-fish' },
-  { value: 'bevande', label: 'Bevande', icon: 'mdi-cup-water' }
+  { value: 'drinks', label: 'Drinks', icon: 'mdi-cup-water' }
 ] as const
 </script>
 
