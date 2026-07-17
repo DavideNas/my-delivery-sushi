@@ -14,6 +14,9 @@ app.use(pinia)
 app.use(router)
 app.use(vuetify)
 
+// Registrazione globale del componente RBAC
+app.component('PermissionGate', PermissionGate)
+
 // Init auth store (token is validated on the fly if present in localStorage)
 const authStore = useAuthStore()
 authStore.initAuth().finally(() => {
