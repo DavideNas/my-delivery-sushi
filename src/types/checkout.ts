@@ -1,3 +1,5 @@
+import { type InjectionKey, type Ref } from 'vue'
+
 export interface CheckoutData {
     address: {
         fullName: string
@@ -21,5 +23,3 @@ export const CheckoutKey = Symbol() as InjectionKey<{
     prevStep: () => void
     currentStep: Ref<number>
 }>
-
-import { type InjectionKey, type Ref } from 'vue'

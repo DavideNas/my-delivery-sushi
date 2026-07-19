@@ -72,9 +72,19 @@ const handleLogout = () => {
 
           <v-list density="comfortable" width="180" class="pa-1 rounded-lg">
             <v-list-item class="text-caption text-grey-darken-1">
-              Ruolo: <v-chip size="x-small" color="secondary" compact>{{ authStore.currentRole }}</v-chip>
+              Role: <v-chip size="x-small" color="secondary" compact>{{ authStore.currentRole }}</v-chip>
             </v-list-item>
+
             <v-divider class="my-1"></v-divider>
+
+            <v-list-item
+              prepend-icon="mdi-history"
+              title="My Orders"
+              to="/orders"
+              rounded="md"
+              color="primary"
+            ></v-list-item>
+
             <v-list-item
               prepend-icon="mdi-logout"
               title="Esci"

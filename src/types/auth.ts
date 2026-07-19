@@ -1,12 +1,11 @@
 export type UserRole = 'admin' | 'user' | 'guest';
 
-export type UserPermission = {
-  'menu:read'       // for all roles
-  'menu:write'      // for admin and user roles
-  'menu:delete'     // for admin role only;
-  'orders:create'   // for user role only
-  'orders:read-all' // for admin role only
-};
+export type UserPermission = 
+  | 'menu:read'         // for all roles
+  | 'menu:write'        // for admin and user roles
+  | 'menu:delete'       // for admin role only;
+  | 'orders:create'     // for user role only
+  | 'orders:read-all';  // for admin role only
 
 export interface User {
   id: string;

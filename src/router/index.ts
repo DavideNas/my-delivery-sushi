@@ -6,6 +6,7 @@ import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import AdminDashboard from '@/views/admin/AdminDashboard.vue'
 import UnauthorizedView from '@/views/UnauthorizedView.vue'
+import UserOrdersView from '@/views/UserOrdersView.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -29,6 +30,12 @@ const router = createRouter({
       name: 'login',
       component: LoginView,
     },
+    {
+      path: '/orders',
+      name: 'UserOrders',
+      component: UserOrdersView,
+      meta: { requiresAuth: true }
+    },
     // Admin routes protected by our RBAC
     {
       path: '/admin',
@@ -36,7 +43,6 @@ const router = createRouter({
       component: AdminDashboard,
       meta: {
         requiresAuth: true,
-        role: 'admin',
         requiredRoles: ['admin'],           // Only administrators can enter here
         requiredPermissions: ['orders:read-all']
       }
