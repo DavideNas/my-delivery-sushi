@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import PermissionGate from './PermissionGate.vue'
 import { createPinia, setActivePinia } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
+import type { User } from '@/types/auth'
 
 const meta: Meta<typeof PermissionGate> = {
   title: 'Auth/PermissionGate',
@@ -24,7 +25,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * Template base per renderizzare lo slot predefinito e quello #unauthorized
+ * Basic template for rendering the default and #unauthorized slots
  */
 const defaultTemplate = `
   <PermissionGate v-bind="args">
@@ -51,14 +52,16 @@ export const AdminAllowed: Story = {
       const authStore = useAuthStore()
       authStore.isAuthenticated = true
       authStore.currentRole = 'admin'
-      // Popoliamo anche l'oggetto user completo per sicurezza di usePermissions
-      authStore.user = {
+      // Populate also the full user object for usePermissions security.
+      const mockAdminUser: User = {
         id: '1',
         name: 'Admin Boss',
         email: 'admin@sushi.com',
         role: 'admin',
         permissions: ['menu:read', 'menu:write', 'admin:access'],
-      } as any
+      }
+
+      authStore.user = mockAdminUser
       return { args }
     },
     template: defaultTemplate,
@@ -76,13 +79,16 @@ export const UserDeniedRole: Story = {
       const authStore = useAuthStore()
       authStore.isAuthenticated = true
       authStore.currentRole = 'user'
-      authStore.user = {
+
+      const mockCustomerUser: User = {
         id: '2',
         name: 'Mario Rossi',
         email: 'mario@gmail.com',
         role: 'user',
         permissions: ['menu:read'],
-      } as any
+      }
+
+      authStore.user = mockCustomerUser
       return { args }
     },
     template: defaultTemplate,
@@ -102,13 +108,16 @@ export const DisabledModeWhenUnauthorized: Story = {
       const authStore = useAuthStore()
       authStore.isAuthenticated = true
       authStore.currentRole = 'user'
-      authStore.user = {
+
+      const mockCustomerUser: User = {
         id: '2',
         name: 'Mario Rossi',
         email: 'mario@gmail.com',
         role: 'user',
         permissions: ['menu:read'],
-      } as any
+      }
+
+      authStore.user = mockCustomerUser
       return { args }
     },
     template: `
@@ -138,13 +147,16 @@ export const ModeAnyPermission: Story = {
       const authStore = useAuthStore()
       authStore.isAuthenticated = true
       authStore.userPermissions = ['menu:read']
-      authStore.user = {
+
+      const mockCustomerUser: User = {
         id: '2',
         name: 'Mario Rossi',
         email: 'mario@gmail.com',
         role: 'user',
         permissions: ['menu:read'],
-      } as any
+      }
+
+      authStore.user = mockCustomerUser
       return { args }
     },
     template: `
