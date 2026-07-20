@@ -59,7 +59,7 @@ const handleLogout = () => {
         <!-- Caso 1: Loggato -> Menu Dropdown -->
         <v-menu v-if="isAuthenticated" location="bottom end">
           <template #activator="{ props }">
-            <v-btn v-bind="props" variant="text" rounded="xl" class="text-none text-white">
+            <v-btn aria-label="Menu utente" v-bind="props" variant="text" rounded="xl" class="text-none text-white">
               <v-avatar size="28" color="amber-darken-2" class="mr-2 text-white">
                 {{ currentUser?.name?.charAt(0).toUpperCase() || 'U' }}
               </v-avatar>
@@ -99,6 +99,7 @@ const handleLogout = () => {
         <v-btn
           v-else
           icon="mdi-account-circle-outline"
+          aria-label="Accedi o registrati"
           variant="text"
           color="white"
           @click="isLoginOpen = true"
@@ -106,7 +107,7 @@ const handleLogout = () => {
       </div>
 
       <!-- ── BOTTONE CARRELLO ── -->
-      <v-btn icon data-test="open-cart-btn" @click="$emit('toggle-cart')">
+      <v-btn icon aria-label="Apri carrello" data-test="open-cart-btn" @click="$emit('toggle-cart')">
         <v-badge
           :content="totalItemsCount"
           :model-value="totalItemsCount > 0"

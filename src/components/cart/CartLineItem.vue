@@ -17,7 +17,7 @@ const emit = defineEmits<{
 
             <!-- Miniature image  -->
             <v-avatar size="60" rounded="md" class="mr-3 bg-grey-lighten-2">
-                <v-img :src="item.item.image" cover alt="item.item.name" />
+                <v-img :src="item.item.image" cover :alt="item.item.name" />
             </v-avatar>
 
             <!-- Product details -->
@@ -26,17 +26,18 @@ const emit = defineEmits<{
                     {{ item.item.name }}
                 </h4>
                 <div class="text-caption text-primary font-weight-medium">
-                    {{ item.item.price.toFixed(2) }}€ × {{ item.quantity }} 
+                    {{ item.item.price.toFixed(2) }}€ × {{ item.quantity }}
                 </div>
             </div>
 
             <!-- Quantity controls -->
             <div class="d-flex align-center ml-2">
-                <v-btn 
+                <v-btn
                     icon="mdi-minus"
                     size="x-small"
                     variant="tonal"
                     color="grey-darken-1"
+                    aria-label="Riduci quantità"
                     @click="emit('decrease')" />
 
                 <span class="mx-3 text-body-2 font-weight-bold">
@@ -48,6 +49,7 @@ const emit = defineEmits<{
                     size="x-small"
                     variant="tonal"
                     color="primary"
+                    aria-label="Aumenta quantità"
                     @click="emit('increase')" />
             </div>
         </div>
