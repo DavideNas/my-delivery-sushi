@@ -56,7 +56,7 @@ describe('useCart Composable', () => {
     addToCart(mockItem1)
 
     expect(cartItems.value).toHaveLength(1)
-    expect(cartItems.value[0].quantity).toBe(2)
+    expect(cartItems.value[0]!.quantity).toBe(2)
     expect(totalItemsCount.value).toBe(2)
     expect(totalPrice.value).toBe(8.0)
   })
@@ -82,7 +82,7 @@ describe('useCart Composable', () => {
     removeFromCart(mockItem1.id)
 
     expect(cartItems.value).toHaveLength(1)
-    expect(cartItems.value[0].quantity).toBe(1)
+    expect(cartItems.value[0]?.quantity).toBe(1)
     expect(totalItemsCount.value).toBe(1)
     expect(totalPrice.value).toBe(4.0)
   })
@@ -96,7 +96,7 @@ describe('useCart Composable', () => {
     removeFromCart(mockItem1.id)
 
     expect(cartItems.value).toHaveLength(1)
-    expect(cartItems.value[0].item.id).toBe(mockItem2.id)
+    expect(cartItems.value[0]?.item.id).toBe(mockItem2.id)
     expect(totalItemsCount.value).toBe(1)
     expect(totalPrice.value).toBe(3.5)
   })

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useMenuStore, type MenuItem } from '@/stores/menu'
+import { useMenuStore } from '@/stores/menu'
+import type { MenuItem } from '@/types/menu'
 
 const menuStore = useMenuStore()
 
-// We read responsive data from the global store
+// Read responsive data from the global store
 const menuItems = computed(() => menuStore.items)
 
 // Let's define the columns of the Enterprise Table
@@ -38,17 +39,17 @@ const categories = ['nigiri', 'uramaki', 'temaki', 'poke', 'drinks']
 // CRUD Methods (Mock)
 const saveNewItem = () => {
   if (!newItem.value.name || newItem.value.price <= 0) return
-  
+
   // 2. Passiamo i dati puliti all'azione dello store. Ci pensa lo store a calcolare l'ID stringa!
   menuStore.addItem({
     name: newItem.value.name,
-    category: newItem.value.category,
+    category: newItem.value.category as MenuItem['category'],
     price: Number(newItem.value.price),
     description: newItem.value.description,
     image: newItem.value.image,
     available: newItem.value.available
   })
-  
+
   // Reset form and modal closure
   newItem.value = { name: '', category: 'uramaki', price: 0, description: '', image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500', available: true }
   isCreateDialogOpen.value = false
@@ -78,7 +79,7 @@ const deleteItem = () => {
         <h2 class="text-h5 font-weight-bold">Sushi Menu Management</h2>
         <p class="text-caption text-medium-emphasis">Edit prices inline or change availability instantly</p>
       </div>
-      
+
       <div class="d-flex align-center gap-3 style-controls">
         <v-text-field
           v-model="search"
@@ -204,7 +205,7 @@ const deleteItem = () => {
               rows="3"
               class="mb-4"
             ></v-textarea>
-            
+
             <v-card-actions class="px-0 pb-0">
               <v-spacer></v-spacer>
               <v-btn variant="text" @click="isCreateDialogOpen = false">Annulla</v-btn>

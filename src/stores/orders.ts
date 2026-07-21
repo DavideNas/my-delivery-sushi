@@ -27,14 +27,17 @@ export const useOrdersStore = defineStore('orders', () => {
 
             for (let j = 0; j < itemsCount; j++){
                 const randomSushi = sushiItems[Math.floor(Math.random() * sushiItems.length)]
-                const qty = Math.floor(Math.random() * 3) + 1
-                orderItems.push({
-                    menuItemId: String(j),
-                    name: randomSushi.name,
-                    quantity: qty,
-                    price: randomSushi.price
-                })
-                totalAmount += randomSushi.price * qty
+                if (randomSushi) {
+                  const quantity = Math.floor(Math.random() * 2) + 1
+                  orderItems.push({
+                      id: `item-${j}`,
+                      menuItemId: `menu-item-${j}`,
+                      name: randomSushi.name,
+                      price: randomSushi.price,
+                      quantity
+                  })
+                  totalAmount += randomSushi.price * quantity
+              }
             }
 
             // Generate casual date in the last 3 weeks
@@ -50,11 +53,13 @@ export const useOrdersStore = defineStore('orders', () => {
             else if (rand < 0.15) status = 'preparing'
             else if (rand < 0.22) status = 'cancelled'
 
+            const customerName = names[Math.floor(Math.random() * names.length)] ?? 'Cliente Anonimo'
+
             generatedOrders.push({
                 id: `ORD-${10000 +i}`,
-                customerName: names[Math.floor(Math.random() * names.length)],
+                customerName,
                 items: orderItems,
-                totalAmount: parseFloat(totalAmount.toFixed(2)),
+                totalAmount,
                 status,
                 createdAt: date.toISOString(),
                 notes: Math.random() > 0.7 ? 'Contactless delivery internal intercom 4' : undefined
@@ -78,5 +83,5 @@ export const useOrdersStore = defineStore('orders', () => {
         }
     }
 
-    return { orders, updateOrderStatus }
+    return { orders, generateMassiveMockOrders, updateOrderStatus }
 })

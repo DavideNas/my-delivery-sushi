@@ -40,8 +40,8 @@ export const Guest: Story = {
     components: { MainAppBar },
     setup() {
       const authStore = useAuthStore()
-      authStore.isAuthenticated = false
       authStore.user = null
+      authStore.token = null
       return { args }
     },
     template: '<MainAppBar v-bind="args" />'
@@ -54,9 +54,8 @@ export const LoggedInUser: Story = {
     components: { MainAppBar },
     setup() {
       const authStore = useAuthStore()
-      authStore.isAuthenticated = true
-      authStore.user = { id: '1', name: 'Mario Rossi', email: 'mario@example.com' }
-      authStore.currentRole = 'user'
+      authStore.token = 'fake-token'
+      authStore.user = { id: '1', username: 'Mario Rossi', email: 'mario@example.com', role: 'user', permissions: ['menu:read', 'orders:create'] }
       return { args }
     },
     template: '<MainAppBar v-bind="args" />'
@@ -69,9 +68,8 @@ export const AdminUser: Story = {
     components: { MainAppBar },
     setup() {
       const authStore = useAuthStore()
-      authStore.isAuthenticated = true
-      authStore.user = { id: '2', name: 'Admin Boss', email: 'admin@example.com' }
-      authStore.currentRole = 'admin'
+      authStore.token = 'fake-token'
+      authStore.user = { id: '2', username: 'Admin Boss', email: 'admin@example.com', role: 'admin', permissions: ['menu:read', 'menu:write', 'menu:delete', 'orders:create', 'orders:read-all'] }
       return { args }
     },
     template: '<MainAppBar v-bind="args" />'

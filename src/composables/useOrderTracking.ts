@@ -42,8 +42,10 @@ export function useOrderTracking(orderId: string): UseOrderTrackingReturn {
             // 2. Flow forwards
             if (currentStep < trackingSteps.length) {
                 const nextStep = trackingSteps[currentStep];
-                status.value = nextStep.status;
-                deliveryData.value = nextStep.message;
+                if (nextStep) {
+                  status.value = nextStep.status;
+                  deliveryData.value = nextStep.message;
+                }
                 currentStep++;
 
                 if (status.value === 'OUT_FOR_DELIVERY') {

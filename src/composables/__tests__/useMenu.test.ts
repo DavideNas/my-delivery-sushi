@@ -27,13 +27,23 @@ const fakeMenuItems: MenuItem[] = [
   }
 ]
 
+const mockMenuItem = {
+  id: '1',
+  name: 'Sake Nigiri',
+  description: 'Fresh salmon nigiri',
+  price: 4,
+  image: 'https://example.com/sake.jpg',
+  category: 'nigiri' as const,
+  available: true
+}
+
 // 2. Mock menuService module with explicit types to satisfy ESLint
 vi.mock('@/services/menuService', () => ({
   menuService: {
-    getMenuItems: vi.fn<[], Promise<MenuItem[]>>(),
-    getItems: vi.fn<[], Promise<MenuItem[]>>(),
-    fetchMenuItems: vi.fn<[], Promise<MenuItem[]>>(),
-    fetchItems: vi.fn<[], Promise<MenuItem[]>>()
+    getMenuItems: vi.fn<() => Promise<MenuItem[]>>(),
+    getItems: vi.fn<() => Promise<MenuItem[]>>(),
+    fetchMenuItems: vi.fn<() => Promise<MenuItem[]>>(),
+    fetchItems: vi.fn<() => Promise<MenuItem[]>>(),
   }
 }))
 
@@ -65,10 +75,7 @@ describe('useMenu Composable', () => {
     // Reset underlying Pinia store state directly
     const store = useMenuStore()
     store.$patch({
-      items: [],
-      loading: false,
-      error: null,
-      selectedCategory: 'all'
+      items: [ mockMenuItem ],
     })
   })
 
@@ -118,7 +125,7 @@ describe('useMenu Composable', () => {
     selectedCategory.value = 'nigiri'
 
     expect(filteredItems.value).toHaveLength(1)
-    expect(filteredItems.value[0].id).toBe('1')
+    expect(filteredItems.value[0]!.id).toBe('1')
   })
 
   it('should handle server errors correctly', async () => {

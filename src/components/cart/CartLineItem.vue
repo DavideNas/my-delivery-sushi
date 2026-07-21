@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import type { CartItem } from '@/types/cart'
+import type { MenuItem } from '@/types/menu'
+
+export interface CartItem {
+  item: MenuItem
+  quantity: number
+}
 
 defineProps<{
   item: CartItem

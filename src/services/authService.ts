@@ -30,7 +30,7 @@ const MOCK_USERS: Record<string, Omit<User, 'permissions'>> = {
 };
 
 export const authService = {
-    async login(email: string, passwordHash: string): Promise<{user: User, token: string}> {
+    async login(email: string): Promise<{user: User, token: string}> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
 
@@ -65,20 +65,31 @@ export const authService = {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (token.includes('admin')) {
+                  const admin = MOCK_USERS['admin@sushi.it']
+                  if (admin) {
                     resolve({
-                        ...MOCK_USERS['admin@sushi.it'],
-                        permissions: ROLE_PERMISSIONS['admin']
-                    });
+                      id: admin.id || '1',
+                      username: admin.username || 'Admin',
+                      email: admin.email || 'admin@sushi.it',
+                      role: 'admin',
+                      permissions: ROLE_PERMISSIONS['admin']
+                    } as User)
+                  }
                 } else if (token.includes('user')) {
-                    // Mario is the default user for this mock, so we return him as standard 'user' token.
+                  const user = MOCK_USERS['mario@sushi.it']
+                  if (user) {
                     resolve({
-                        ...MOCK_USERS['mario@sushi.it'],
-                        permissions: ROLE_PERMISSIONS['user']
-                    });
+                      id: user.id || '2',
+                      username: user.username || 'Mario Rossi',
+                      email: user.email || 'mario@sushi.it',
+                      role: 'user',
+                      permissions: ROLE_PERMISSIONS['user']
+                    } as User)
+                  }
                 } else {
-                    reject(new Error('Not valid or expired token.'));
+                  reject(new Error('Not valid or expired token.'));
                 }
-            })
-        }, 500); // Simulate network delay
+            }, 500) // Simulate network delay
+        });
     }
 };

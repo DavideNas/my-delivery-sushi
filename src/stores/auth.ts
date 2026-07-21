@@ -35,18 +35,20 @@ export const useAuthStore = defineStore('auth', {
     },
 
     actions: {
-        async login(email: string, passwordHash: string) {
+        async login(email: string, passwordHash?: string) {
+            console.log(passwordHash);
             this.isLoading = true;
             this.error = null;
             try {
-                const { user, token } = await authService.login(email, passwordHash);
+                const { user, token } = await authService.login(email);
                 this.user = user;
                 this.token = token;
                 localStorage.setItem('auth_token', token);
             } catch (error) {
-                this.error = error.message || 'An error occurred during login.';
+                const err = error as Error;
+                this.error = err.message || 'An error occurred during login.';
                 this.logout();
-                throw err;
+                throw error;
             } finally {
                 this.isLoading = false;
             }
@@ -60,8 +62,9 @@ export const useAuthStore = defineStore('auth', {
                 const user = await authService.validateToken(this.token);
                 this.user = user;
             } catch (error) {
+                const err = error as Error;
                 // if the token is invalid, we clear the user and token from the store and localStorage
-                this.error = error.message || 'Invalid token.';
+                this.error = err.message || 'Invalid token.';
                 this.logout();
             } finally {
                 this.isLoading = false;

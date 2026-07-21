@@ -29,7 +29,7 @@ describe('usePermissions', () => {
       const { hasPermission } = usePermissions()
 
       expect(hasPermission('menu:read')).toBe(true)
-      expect(hasPermission('cart:write')).toBe(false)
+      expect(hasPermission('menu:write')).toBe(false)
     })
 
     it('should correctly evaluate roles with hasRole and hasAnyRole', () => {
@@ -48,10 +48,10 @@ describe('usePermissions', () => {
   describe('Authenticated user permissions', () => {
     const mockUser: User = {
       id: 'usr-1',
-      name: 'Mario Rossi',
+      username: 'Mario Rossi',
       email: 'mario@example.com',
       role: 'user',
-      permissions: ['menu:read', 'cart:write', 'orders:read']
+      permissions: ['menu:read', 'menu:write', 'orders:create']
     }
 
     beforeEach(() => {
@@ -70,26 +70,26 @@ describe('usePermissions', () => {
     it('should verify specific permissions correctly', () => {
       const { hasPermission } = usePermissions()
 
-      expect(hasPermission('cart:write')).toBe(true)
-      expect(hasPermission('admin:access')).toBe(false)
+      expect(hasPermission('orders:create')).toBe(true)
+      expect(hasPermission('orders:read-all')).toBe(false)
     })
 
     it('should evaluate hasAnyPermission correctly (OR logic)', () => {
       const { hasAnyPermission } = usePermissions()
 
-      // User has 'cart:write', so at least one is present -> true
-      expect(hasAnyPermission(['admin:access', 'cart:write'])).toBe(true)
+      // User has 'orders:create', so at least one is present -> true
+      expect(hasAnyPermission(['orders:read-all', 'orders:create'])).toBe(true)
       // User has none of these -> false
-      expect(hasAnyPermission(['admin:access', 'users:delete'])).toBe(false)
+      expect(hasAnyPermission(['orders:read-all', 'menu:delete'])).toBe(false)
     })
 
     it('should evaluate hasAllPermissions correctly (AND logic)', () => {
       const { hasAllPermissions } = usePermissions()
 
-      // User has both 'menu:read' and 'cart:write' -> true
-      expect(hasAllPermissions(['menu:read', 'cart:write'])).toBe(true)
-      // User does not have 'admin:access' -> false
-      expect(hasAllPermissions(['menu:read', 'admin:access'])).toBe(false)
+      // User has both 'menu:read' and 'orders:create' -> true
+      expect(hasAllPermissions(['menu:read', 'orders:create'])).toBe(true)
+      // User does not have 'orders:read-all' -> false
+      expect(hasAllPermissions(['menu:read', 'orders:read-all'])).toBe(false)
     })
   })
 
@@ -100,11 +100,11 @@ describe('usePermissions', () => {
     it('should clear user state upon logout call', () => {
       authStore.user = {
         id: 'adm-1',
-        name: 'Admin Boss',
+        username: 'Admin Boss',
         email: 'admin@sushi.com',
         role: 'admin',
-        permissions: ['admin:access']
-      } as User
+        permissions: ['menu:write', 'menu:delete', 'orders:read-all']
+      }
       authStore.token = 'active-token'
 
       const { logout, isAuthenticated, currentRole } = usePermissions()

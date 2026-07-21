@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import CartLineItem from './CartLineItem.vue'
-import type { CartItem } from '@/types/cart'
+import type { CartItem } from './CartLineItem.vue'
 
 // Example mock data
 const mockCartItemSingle: CartItem = {

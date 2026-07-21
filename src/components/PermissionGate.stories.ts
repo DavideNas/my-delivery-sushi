@@ -50,18 +50,17 @@ export const AdminAllowed: Story = {
     components: { PermissionGate },
     setup() {
       const authStore = useAuthStore()
-      authStore.isAuthenticated = true
-      authStore.currentRole = 'admin'
       // Populate also the full user object for usePermissions security.
       const mockAdminUser: User = {
         id: '1',
-        name: 'Admin Boss',
+        username: 'Admin Boss',
         email: 'admin@sushi.com',
         role: 'admin',
-        permissions: ['menu:read', 'menu:write', 'admin:access'],
+        permissions: ['menu:read', 'menu:write', 'orders:read-all'],
       }
 
       authStore.user = mockAdminUser
+      authStore.token = 'fake-token'
       return { args }
     },
     template: defaultTemplate,
@@ -77,18 +76,17 @@ export const UserDeniedRole: Story = {
     components: { PermissionGate },
     setup() {
       const authStore = useAuthStore()
-      authStore.isAuthenticated = true
-      authStore.currentRole = 'user'
 
       const mockCustomerUser: User = {
         id: '2',
-        name: 'Mario Rossi',
+        username: 'Mario Rossi',
         email: 'mario@gmail.com',
         role: 'user',
         permissions: ['menu:read'],
       }
 
       authStore.user = mockCustomerUser
+      authStore.token = 'fake-token'
       return { args }
     },
     template: defaultTemplate,
@@ -106,18 +104,17 @@ export const DisabledModeWhenUnauthorized: Story = {
     components: { PermissionGate },
     setup() {
       const authStore = useAuthStore()
-      authStore.isAuthenticated = true
-      authStore.currentRole = 'user'
 
       const mockCustomerUser: User = {
         id: '2',
-        name: 'Mario Rossi',
+        username: 'Mario Rossi',
         email: 'mario@gmail.com',
         role: 'user',
         permissions: ['menu:read'],
       }
 
       authStore.user = mockCustomerUser
+      authStore.token = 'fake-token'
       return { args }
     },
     template: `
@@ -145,18 +142,16 @@ export const ModeAnyPermission: Story = {
     components: { PermissionGate },
     setup() {
       const authStore = useAuthStore()
-      authStore.isAuthenticated = true
-      authStore.userPermissions = ['menu:read']
-
       const mockCustomerUser: User = {
         id: '2',
-        name: 'Mario Rossi',
+        username: 'Mario Rossi',
         email: 'mario@gmail.com',
         role: 'user',
         permissions: ['menu:read'],
       }
 
       authStore.user = mockCustomerUser
+      authStore.token = 'fake-token'
       return { args }
     },
     template: `

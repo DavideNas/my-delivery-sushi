@@ -34,11 +34,14 @@ const handleRegister = async () => {
   try {
     // Note: Make sure your authStore has a register function,
     // otherwise you can simulate or hook into direct login for now.
-    await authStore.register({ name: name.value, email: email.value, password: password.value })
+    // await authStore.register({ name: name.value, email: email.value, password: password.value })
+    await authStore.login(email.value, password.value)
     isOpen.value = false
     emit('success')
   } catch (error) {
-    console.log(error.message)
+    if (error instanceof Error) {
+      console.log(error.message)
+    }
     // Managed by the store
   }
 }
@@ -54,10 +57,10 @@ const openLogin = () => {
     <v-card class="pa-4 elevation-4 rounded-lg">
       <v-card-title class="d-flex justify-space-between align-center">
         <span class="text-h6 font-weight-bold">Create Account</span>
-        <v-btn 
-          icon="mdi-close" 
-          variant="text" 
-          density="comfortable" 
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          density="comfortable"
           :disabled="isLoading"
           @click="isOpen = false"
         ></v-btn>
@@ -82,6 +85,7 @@ const openLogin = () => {
           <v-text-field
             v-model="name"
             label="Full Name"
+            :input-props="{ 'data-test': 'address-fullname' }"
             type="text"
             prepend-inner-icon="mdi-account-outline"
             variant="outlined"
@@ -130,7 +134,7 @@ const openLogin = () => {
         </v-form>
 
         <div class="text-center mt-4 text-body-2">
-          Already have an account? 
+          Already have an account?
           <a href="#" class="text-primary font-weight-bold text-decoration-none" @click.prevent="openLogin">
             Sign in
           </a>

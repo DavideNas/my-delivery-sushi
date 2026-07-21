@@ -37,7 +37,9 @@ const handleLogin = async () => {
     isOpen.value = false // Closes the modal on success
     emit('success')
   } catch (error) {
-    console.log(error.message)
+    if (error instanceof Error) {
+      console.log(error.message)
+    }
     // Managed by the store
   }
 }
@@ -60,10 +62,10 @@ const quickLogin = async (mockEmail: string) => {
       <!-- Close button at the top right -->
       <v-card-title class="d-flex justify-space-between align-center">
         <span class="text-h6 font-weight-bold">Sign in</span>
-        <v-btn 
-          icon="mdi-close" 
-          variant="text" 
-          density="comfortable" 
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          density="comfortable"
           :disabled="isLoading"
           @click="isOpen = false"
         ></v-btn>
@@ -126,7 +128,7 @@ const quickLogin = async (mockEmail: string) => {
         </v-form>
 
         <div class="text-center mt-4 text-body-2">
-          Don't have an account? 
+          Don't have an account?
           <a href="#" class="text-primary font-weight-bold text-decoration-none" @click.prevent="openRegister">
             Sign up
           </a>

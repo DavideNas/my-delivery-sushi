@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/auth'
 import LoginModal from '@/components/auth/LoginModal.vue'
 import RegisterModal from '@/components/auth/RegisterModal.vue'
 
-// Emit per segnalare ad App.vue di aprire il carrello
+// Emit to signal App.vue to open the cart
 defineEmits<{
   (e: 'toggle-cart'): void
 }>()
@@ -13,7 +13,7 @@ defineEmits<{
 const { totalItemsCount } = useCart()
 const authStore = useAuthStore()
 
-// Stato per il modale di login aperto dall'icona profilo
+// Status for login modal opened by profile icon
 const isLoginOpen = ref(false)
 const isRegisterOpen = ref(false)
 
@@ -23,13 +23,19 @@ const currentUser = computed(() => authStore.user)
 const handleLogout = () => {
   authStore.logout()
 }
+
+// Post login/registration success management from modals
+const handleCheckoutSuccess = () => {
+  isLoginOpen.value = false
+  isRegisterOpen.value = false
+}
 </script>
 
 <template>
   <v-app-bar color="primary" elevation="1" flat>
     <v-container class="d-flex align-center py-0">
 
-      <!-- Logo e Titolo -->
+      <!-- Logo and Title -->
       <v-app-bar-title class="font-weight-bold d-flex align-center">
         <router-link to="/" class="text-decoration-none color-white-link">
           <div class="d-flex align-center cursor-pointer">
@@ -42,7 +48,7 @@ const handleLogout = () => {
 
       <v-spacer></v-spacer>
 
-      <!-- ── SEZIONE UTENTE REATTIVA ── -->
+      <!-- ── RESPONSIVE USER SECTION ── -->
       <div class="d-flex align-center mr-2">
 
         <v-btn
@@ -56,15 +62,15 @@ const handleLogout = () => {
           Menu Admin
         </v-btn>
 
-        <!-- Caso 1: Loggato -> Menu Dropdown -->
+        <!-- Case 1: Logged in -> Dropdown Menu -->
         <v-menu v-if="isAuthenticated" location="bottom end">
           <template #activator="{ props }">
             <v-btn aria-label="Menu utente" v-bind="props" variant="text" rounded="xl" class="text-none text-white">
               <v-avatar size="28" color="amber-darken-2" class="mr-2 text-white">
-                {{ currentUser?.name?.charAt(0).toUpperCase() || 'U' }}
+                {{ currentUser?.username?.charAt(0).toUpperCase() || 'U' }}
               </v-avatar>
               <span class="text-body-2 font-weight-medium d-none d-sm-inline">
-                {{ currentUser?.name }}
+                {{ currentUser?.username }}
               </span>
               <v-icon size="small" class="ml-1">mdi-chevron-down</v-icon>
             </v-btn>
@@ -95,7 +101,7 @@ const handleLogout = () => {
           </v-list>
         </v-menu>
 
-        <!-- Caso 2: Ospite -> Icona di Login diretta -->
+        <!-- Case 2: Guest -> Direct Login Icon -->
         <v-btn
           v-else
           icon="mdi-account-circle-outline"
@@ -106,7 +112,7 @@ const handleLogout = () => {
         ></v-btn>
       </div>
 
-      <!-- ── BOTTONE CARRELLO ── -->
+      <!-- ── CART BUTTON ── -->
       <v-btn icon aria-label="Apri carrello" data-test="open-cart-btn" @click="$emit('toggle-cart')">
         <v-badge
           :content="totalItemsCount"
